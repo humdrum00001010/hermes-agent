@@ -167,6 +167,7 @@ done
 # ── Run in hermetic env ──────────────────────────────────────────────────────
 # env -i: start with empty environment, opt-in only what we need.
 # No credential var can leak — you'd have to explicitly add it here.
+# Hermes subprocesses need the selected test interpreter, too.
 echo "▶ running per-file parallel test suite via run_tests_parallel.py"
 echo "  (TZ=UTC LANG=C.UTF-8 PYTHONHASHSEED=0; clean env)"
 
@@ -184,6 +185,7 @@ echo "▶ launching test runner"
 exec env -i \
   PATH="$PATH" \
   HOME="$HOME" \
+  HERMES_PYTHON="$PYTHON" \
   ${WIN_ENV[@]+"${WIN_ENV[@]}"} \
   ${TEST_ENV[@]+"${TEST_ENV[@]}"} \
   TZ=UTC \

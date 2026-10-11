@@ -16,6 +16,7 @@ def test_shell_runner_executes_tests_and_propagates_failure(tmp_path):
         "def test_canary():\n"
         f"    Path({str(marker)!r}).write_text('executed')\n"
         "    assert os.environ['PATHEXT'] == '.COM;.EXE;.BAT;.CMD'\n"
+        "    assert os.environ.get('HERMES_PYTHON')\n"
         "    assert False, 'runner failure propagation canary'\n",
         encoding="utf-8",
     )
