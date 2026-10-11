@@ -84,6 +84,16 @@ class TestInitialize:
         assert isinstance(resp, InitializeResponse)
         assert resp.protocol_version == acp.PROTOCOL_VERSION
 
+    @pytest.mark.asyncio
+    async def test_initialize_advertises_streamable_http_mcp_support(self, agent):
+        router = build_agent_router(agent)
+        response = await router(
+            "initialize", {"protocolVersion": acp.PROTOCOL_VERSION, "clientCapabilities": {}}, False,
+        )
+        result = response.model_dump(by_alias=True, exclude_none=True)
+
+        assert result["agentCapabilities"]["mcpCapabilities"]["http"] is True
+
 
 
 
